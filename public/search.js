@@ -228,6 +228,24 @@ function getHistory() {
     })
 }
 
+async function storeIdHistory(){
+    searchedId = $('#pokemonId').val()
+    currentTime = new Date()
+    await $.ajax({
+        url: 'https://fast-reef-36186.herokuapp.com/timeline/insert',
+        type: 'PUT',
+        data: {
+            text: `A user had searched by ID:${searchedId}`,
+            time: currentTime,
+            hits: 1
+        },
+        success: (x) => {
+            console.log(x)
+        }
+    })
+    getHistory()
+}
+
 async function storeHistory(type_url) {
     typeName = ''
     await $.ajax({
@@ -240,7 +258,7 @@ async function storeHistory(type_url) {
                 url: 'https://fast-reef-36186.herokuapp.com/timeline/insert',
                 type: 'PUT',
                 data: {
-                    text: `A user had searched for ${typeName}`,
+                    text: `A user had searched by type:${typeName}`,
                     time: currentTime,
                     hits: 1
                 },
@@ -260,6 +278,7 @@ function setup() {
     $("#nameSearch").click(searchByName)
     $("body").on("click", ".pages", pageButton)
     $("body").on("click", ".likeButton", incrementLike)
+    $("body").on("click", "#idSearch", storeIdHistory)
     $("#pokeType").change(() => {
         displayPokemon($("#pokeType option:selected").val())
         storeHistory($("#pokeType option:selected").val())
