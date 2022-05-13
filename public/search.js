@@ -192,26 +192,74 @@ function lastPage() {
     pokemonsForPage(numOfPages)
 }
 
-function storeHistory(type_url) {
-    typeName = ''
+async function incrementLike() {
+    buttonID = this.id
+    await $.ajax({
+        url: `http://localhost:5000/timeline/incrementHits/${buttonID}`,
+        type: 'GET',
+        success: (x) => {
+            console.log(x)
+        }
+    })
+    getHistory()
+}
+
+function populateHistory(data) {
+    // console.log(data)
+    historyArray = ''
+    $('.history').empty()
+    for (i = 0; i < data.length; i++) {
+        historyArray += `
+        <p class='eachHistory'>
+            ${data[i].text} @ ${data[i].time}
+            <br>
+            <button class='likeButton' id='${data[i]._id}'>Like!</button> Hits: ${data[i].hits}
+        </p>
+        `
+    }
+    $('.history').html(historyArray)
+}
+
+function getHistory() {
     $.ajax({
+        url: 'http://localhost:5000/timeline/read',
+        type: 'GET',
+        success: populateHistory
+    })
+}
+
+async function storeHistory(type_url) {
+    typeName = ''
+    await $.ajax({
         url: type_url,
         type: 'GET',
         success: (typeData) => {
             typeName = typeData.name
-            // $.ajax({
-            //     url: 
-            // })
+            currentTime = new Date()
+            $.ajax({
+                url: 'http://localhost:5000/timeline/insert',
+                type: 'PUT',
+                data: {
+                    text: `A user had searched for ${typeName}`,
+                    time: currentTime,
+                    hits: 1
+                },
+                success: (x) => {
+                    console.log(x)
+                }
+            })
         }
     })
-    // console.log(typeName)
+    getHistory()
 }
 
 function setup() {
     populateTypes()
+    getHistory()
     $("#idSearch").click(searchById)
     $("#nameSearch").click(searchByName)
     $("body").on("click", ".pages", pageButton)
+    $("body").on("click", ".likeButton", incrementLike)
     $("#pokeType").change(() => {
         displayPokemon($("#pokeType option:selected").val())
         storeHistory($("#pokeType option:selected").val())

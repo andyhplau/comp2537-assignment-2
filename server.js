@@ -47,8 +47,36 @@ app.put('/timeline/insert', function (req, res) {
     });
 });
 
+app.get('/timeline/read', function (req, res) {
+    timeeventModel.find({}, function (err, data) {
+        if (err) {
+            console.log("Error" + err)
+        } else {
+            console.log("Data" + data)
+        }
+        res.send(data)
+    })
+})
+
+app.get('/timeline/incrementHits/:id', function (req, res) {
+    timeeventModel.updateOne({
+        _id: req.params.id,
+    }, {
+        $inc: {
+            hits: 1
+        }
+    }, function (err, data) {
+        if (err) {
+            console.log("Error " + err)
+        } else {
+            console.log("Data " + data)
+        }
+        res.send("Update successful!")
+    })
+})
+
 app.get('/pokemon/:id', function (req, res) {
-    const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`
+    const url = `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${req.params.id}`
     data = '';
 
     https.get(url, (https_res) => {
