@@ -195,7 +195,7 @@ function lastPage() {
 async function incrementLike() {
     buttonID = this.id
     await $.ajax({
-        url: `http://localhost:5000/timeline/incrementHits/${buttonID}`,
+        url: `https://fast-reef-36186.herokuapp.com/timeline/incrementHits/${buttonID}`,
         type: 'GET',
         success: (x) => {
             console.log(x)
@@ -222,7 +222,7 @@ function populateHistory(data) {
 
 function getHistory() {
     $.ajax({
-        url: 'http://localhost:5000/timeline/read',
+        url: 'https://fast-reef-36186.herokuapp.com/timeline/read',
         type: 'GET',
         success: populateHistory
     })
@@ -237,7 +237,7 @@ async function storeHistory(type_url) {
             typeName = typeData.name
             currentTime = new Date()
             $.ajax({
-                url: 'http://localhost:5000/timeline/insert',
+                url: 'https://fast-reef-36186.herokuapp.com/timeline/insert',
                 type: 'PUT',
                 data: {
                     text: `A user had searched for ${typeName}`,
