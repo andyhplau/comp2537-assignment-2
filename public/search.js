@@ -134,7 +134,7 @@ async function searchById() {
     id = $("#pokemonId").val()
     if ($.isNumeric(id)) {
         searchedPokemons += '<div class="pokemonCol">'
-        console.log(`https://warm-lowlands-28229.herokuapp.com/api/pokemon/${id}`)
+        console.log(`https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${id}`)
         await $.ajax({
             type: 'GET',
             url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${id}`,
