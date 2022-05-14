@@ -204,6 +204,18 @@ async function incrementLike() {
     getHistory()
 }
 
+async function deleteHistory() {
+    buttonID = this.id
+    await $.ajax({
+        url: `https://fast-reef-36186.herokuapp.com/timeline/delete/${buttonID}`,
+        type: 'GET',
+        success: (x) => {
+            console.log(x)
+        }
+    })
+    getHistory()
+}
+
 function populateHistory(data) {
     // console.log(data)
     historyArray = ''
@@ -213,7 +225,7 @@ function populateHistory(data) {
         <p class='eachHistory'>
             ${data[i].text} @ ${data[i].time}
             <br>
-            <button class='likeButton' id='${data[i]._id}'>Like!</button> Hits: ${data[i].hits}
+            <button class='likeButton' id='${data[i]._id}'>Like!</button> Hits: ${data[i].hits} <button class='deleteButton' id='${data[i]._id}'>Delete history</button>
         </p>
         `
     }
@@ -228,7 +240,7 @@ function getHistory() {
     })
 }
 
-async function storeIdHistory(){
+async function storeIdHistory() {
     searchedId = $('#pokemonId').val()
     currentTime = new Date()
     await $.ajax({
@@ -278,6 +290,7 @@ function setup() {
     $("#nameSearch").click(searchByName)
     $("body").on("click", ".pages", pageButton)
     $("body").on("click", ".likeButton", incrementLike)
+    $("body").on("click", ".deleteButton", deleteHistory)
     $("body").on("click", "#idSearch", storeIdHistory)
     $("#pokeType").change(() => {
         displayPokemon($("#pokeType option:selected").val())

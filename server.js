@@ -75,6 +75,19 @@ app.get('/timeline/incrementHits/:id', function (req, res) {
     })
 })
 
+app.get('/timeline/delete/:id', function (req, res) {
+    timeeventModel.remove({
+        _id: req.params.id,
+    }, function (err, data) {
+        if (err) {
+            console.log("Error " + err);
+        } else {
+            console.log("Data " + data);
+        }
+        res.send("Delete successful!");
+    });
+});
+
 app.get('/pokemon/:id', function (req, res) {
     const url = `https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${req.params.id}`
     data = '';
