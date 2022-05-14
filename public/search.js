@@ -296,6 +296,7 @@ async function storeHistory(type_url) {
                     console.log(x)
                 }
             })
+            getHistory()
         }
     })
     getHistory()
