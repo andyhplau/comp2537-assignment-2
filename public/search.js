@@ -137,7 +137,7 @@ async function searchById() {
         console.log(`https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${id}`)
         await $.ajax({
             type: 'GET',
-            url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${id}`,
+            url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${id}`,
             success: populatePokemon
         })
         searchedPokemons += '</div>'
@@ -153,10 +153,10 @@ async function searchByName() {
     $("main").empty()
     pokeName = $("#pokemonName").val()
     searchedPokemons += '<div class="pokemonCol">'
-    console.log(`https://warm-lowlands-28229.herokuapp.com/api/pokemon/${pokeName}`)
+    console.log(`https://warm-lowlands-28229.herokuapp.com/api/pokemon/name/${pokeName}`)
     await $.ajax({
         type: 'GET',
-        url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${pokeName}`,
+        url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/name/${pokeName}`,
         success: populatePokemon
     })
     searchedPokemons += '</div>'

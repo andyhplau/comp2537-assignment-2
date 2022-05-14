@@ -58,7 +58,7 @@ async function loadNinePokemons() {
 
         await $.ajax({
             type: 'GET',
-            url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${pokemonID}`,
+            url: `https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${pokemonID}`,
             success: processPokemon
         })
 

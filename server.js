@@ -76,7 +76,7 @@ app.get('/timeline/incrementHits/:id', function (req, res) {
 })
 
 app.get('/pokemon/:id', function (req, res) {
-    const url = `https://warm-lowlands-28229.herokuapp.com/api/pokemon/${req.params.id}`
+    const url = `https://warm-lowlands-28229.herokuapp.com/api/pokemon/id/${req.params.id}`
     data = '';
 
     https.get(url, (https_res) => {
